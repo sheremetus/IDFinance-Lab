@@ -6,6 +6,8 @@ import com.kirillsheremet.cryptowatch.exception_handling.NoSuchCoinException;
 import com.kirillsheremet.cryptowatch.service.CoinService;
 import com.kirillsheremet.cryptowatch.service.NotifyService;
 import com.kirillsheremet.cryptowatch.timerTask.NotifyToServer;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,8 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static java.lang.Math.abs;
 
@@ -52,22 +56,16 @@ public class CryptoController {
     public void notifyUser(@PathVariable String username, @PathVariable int id) {
         NotifyToServer notify = new NotifyToServer(id, coinService);
         double currentPrice = notify.getCurrentPrice();
+        double percent;
 
         notifyService.notifyUser(username, id, currentPrice);
 
 
         ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
-        do {
-            scheduler.scheduleAtFixedRate(new NotifyToServer(id, coinService), 0, 1, TimeUnit.MINUTES);
-        } while ((abs(currentPrice - coinService.getCoinPrice(id)) / currentPrice) * 100 <= 1);
 
-
+        scheduler.scheduleAtFixedRate(new NotifyToServer(id, coinService, currentPrice, username, scheduler), 0, 10, TimeUnit.SECONDS);
     }
 
-    @GetMapping("https://api.coinlore.net/api/ticker{id}")
-    public void getCurrentPrice(@PathVariable int id) {
-
-    }
 
     @ExceptionHandler
     public ResponseEntity<CoinIncorrectData> handleException(NoSuchCoinException exception) {

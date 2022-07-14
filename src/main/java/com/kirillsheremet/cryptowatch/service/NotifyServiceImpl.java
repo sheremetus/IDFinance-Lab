@@ -17,7 +17,6 @@ public class NotifyServiceImpl implements NotifyService {
     @Transactional
     public int notifyUser(String username, int id, double actualPrice) {
         return userNotifyDAO.notifyUser(username, id, actualPrice);
-
     }
 
 

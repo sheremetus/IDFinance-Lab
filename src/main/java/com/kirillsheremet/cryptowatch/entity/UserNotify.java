@@ -13,13 +13,16 @@ public class UserNotify {
     private String username;
     @Column(name = "coin_id")
     private int coinId;
+    @Column(name = "actual_price")
+    private double actualPrice;
 
     public UserNotify() {
     }
 
-    public UserNotify(String username, int coinId) {
+    public UserNotify(String username, int coinId, double actualPrice) {
         this.username = username;
         this.coinId = coinId;
+        this.actualPrice = actualPrice;
     }
 
     public int getId() {
@@ -44,6 +47,14 @@ public class UserNotify {
 
     public void setCoinId(int coinId) {
         this.coinId = coinId;
+    }
+
+    public double getActualPrice() {
+        return actualPrice;
+    }
+
+    public void setActualPrice(double actualPrice) {
+        this.actualPrice = actualPrice;
     }
 
     @Override

@@ -50,9 +50,9 @@ public class CoinDAOImpl implements CoinDAO {
     }
 
     @Override
-    public void notifyUser(String username, int id) {
+    public void notifyUser(String username, int id,double actualPrice) {
         Session session = sessionFactory.getCurrentSession();
-        session.save(new UserNotify(username, id));
+        session.save(new UserNotify(username, id,actualPrice));
 
     }
 

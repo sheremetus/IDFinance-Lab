@@ -30,6 +30,13 @@ public class CoinServiceImpl implements CoinService {
     @Transactional
     public void notifyUser(String username, int id,double actualPrice) {
         coinDAO.notifyUser(username, id, actualPrice);
+
+    }
+
+    @Override
+    @Transactional
+    public void updateCoinPrice(double price, int id) {
+        coinDAO.updateCoinPrice(price, id);
     }
 
 }

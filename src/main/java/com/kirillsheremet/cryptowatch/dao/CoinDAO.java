@@ -10,6 +10,9 @@ public interface CoinDAO {
 
     public Coin getCoin(int id);
 
+    public void updateCoinPrice(double price, int id);
+
     public void notifyUser(String username, int id, double actualPrice);
+
 
 }

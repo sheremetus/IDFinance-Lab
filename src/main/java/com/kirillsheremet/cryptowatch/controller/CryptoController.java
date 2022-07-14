@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -43,11 +44,14 @@ public class CryptoController {
     @GetMapping("/notify/{username}/{id}")
     public void notifyUser(@PathVariable String username, @PathVariable int id) {
 
-        NotifyToServer notify = new NotifyToServer(id);
+        NotifyToServer notify = new NotifyToServer(id,coinService);
         coinService.notifyUser(username, id, notify.getCurrentPrice());
 
         ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
-        scheduler.scheduleAtFixedRate(notify, 0, 10, TimeUnit.SECONDS);
+        scheduler.scheduleAtFixedRate(new NotifyToServer(id,coinService), 0, 60, TimeUnit.SECONDS);
+
+
+
 
     }
 

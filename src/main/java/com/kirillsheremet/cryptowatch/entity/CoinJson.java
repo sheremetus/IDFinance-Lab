@@ -10,14 +10,14 @@ import java.io.Serializable;
 
 @Entity
 
-public class CoinJson  {
+public class CoinJson implements Serializable  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String symbol;
     private String name;
     private String nameid;
-    private int rank;
+    private double rank;
     private double price_usd;
     private double percent_change_24h;
     private double percent_change_1h;
@@ -27,8 +27,8 @@ public class CoinJson  {
     private double volume24_native;
     private double csupply;
     private double price_btc;
-    private int tsupply;
-    private int msupply;
+    private double tsupply;
+    private double msupply;
 
     public CoinJson() {
     }
@@ -84,11 +84,11 @@ public class CoinJson  {
         this.nameid = nameid;
     }
 
-    public int getRank() {
+    public double getRank() {
         return rank;
     }
 
-    public void setRank(int rank) {
+    public void setRank(double rank) {
         this.rank = rank;
     }
 
@@ -164,19 +164,19 @@ public class CoinJson  {
         this.price_btc = price_btc;
     }
 
-    public int getTsupply() {
+    public double getTsupply() {
         return tsupply;
     }
 
-    public void setTsupply(int tsupply) {
+    public void setTsupply(double tsupply) {
         this.tsupply = tsupply;
     }
 
-    public int getMsupply() {
+    public double getMsupply() {
         return msupply;
     }
 
-    public void setMsupply(int msupply) {
+    public void setMsupply(double msupply) {
         this.msupply = msupply;
     }
 

@@ -34,6 +34,11 @@ public class Coin  {
         symbol = symbol;
     }
 
+    public Coin(int id,  double price) {
+        this.id = id;
+        this.price = price;
+    }
+
     public Coin(int id) {
         this.id = id;
     }
@@ -58,7 +63,7 @@ public class Coin  {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

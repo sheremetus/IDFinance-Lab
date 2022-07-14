@@ -20,6 +20,7 @@ import java.nio.charset.*;
 import org.json.*;
 import org.json.*;
 
+import javax.persistence.Query;
 import java.net.*;
 import java.nio.charset.*;
 import java.io.*;
@@ -28,7 +29,7 @@ import java.nio.charset.Charset;
 import java.util.List;
 
 @Repository
-public class CoinDAOImpl implements CoinDAO {
+public class CoinDAOImpl implements CoinDAO  {
     @Autowired
     private SessionFactory sessionFactory;
 
@@ -37,7 +38,7 @@ public class CoinDAOImpl implements CoinDAO {
     public List<Coin> getAllCoins() {
         Session session = sessionFactory.getCurrentSession();
         List<Coin> allCoins = session
-               // не обращать внимание на подчеркивание :)
+                // не обращать внимание на подчеркивание :)
                 .createQuery("from Coin", Coin.class)
                 .getResultList();
         return allCoins;
@@ -50,11 +51,24 @@ public class CoinDAOImpl implements CoinDAO {
     }
 
     @Override
-    public void notifyUser(String username, int id,double actualPrice) {
+    public  void updateCoinPrice(double price, int id) {
         Session session = sessionFactory.getCurrentSession();
-        session.save(new UserNotify(username, id,actualPrice));
+
+        Coin coin= (Coin) session.load(Coin.class, id);
+        coin.setPrice(price);
+        session.update(coin);
+
 
     }
+
+    @Override
+    public void notifyUser(String username, int id, double actualPrice) {
+        Session session = sessionFactory.getCurrentSession();
+        session.save(new UserNotify(username, id, actualPrice));
+
+    }
+
+
 
 
 }

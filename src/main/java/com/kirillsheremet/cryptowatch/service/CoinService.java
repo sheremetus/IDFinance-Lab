@@ -11,4 +11,5 @@ public interface CoinService {
 
     public void notifyUser(String username, int id, double actualPrice);
 
+    public void updateCoinPrice(double price,int id);
 }

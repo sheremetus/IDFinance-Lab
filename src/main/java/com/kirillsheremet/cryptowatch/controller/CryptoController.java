@@ -4,6 +4,7 @@ import com.kirillsheremet.cryptowatch.entity.Coin;
 import com.kirillsheremet.cryptowatch.exception_handling.CoinIncorrectData;
 import com.kirillsheremet.cryptowatch.exception_handling.NoSuchCoinException;
 import com.kirillsheremet.cryptowatch.service.CoinService;
+import com.kirillsheremet.cryptowatch.service.NotifyService;
 import com.kirillsheremet.cryptowatch.timerTask.NotifyToServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,12 +16,18 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import static java.lang.Math.abs;
+
 @RestController
 @RequestMapping("/api")
 public class CryptoController {
 
     @Autowired
     private CoinService coinService;
+
+    @Autowired
+    private NotifyService notifyService;
+
     private final String noSuchCoinMessage = " There is no coin in database with ID = ";
 
     @GetMapping("/coins")
@@ -43,14 +50,16 @@ public class CryptoController {
 
     @GetMapping("/notify/{username}/{id}")
     public void notifyUser(@PathVariable String username, @PathVariable int id) {
+        NotifyToServer notify = new NotifyToServer(id, coinService);
+        double currentPrice = notify.getCurrentPrice();
 
-        NotifyToServer notify = new NotifyToServer(id,coinService);
-        coinService.notifyUser(username, id, notify.getCurrentPrice());
+        notifyService.notifyUser(username, id, currentPrice);
+
 
         ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
-        scheduler.scheduleAtFixedRate(new NotifyToServer(id,coinService), 0, 60, TimeUnit.SECONDS);
-
-
+        do {
+            scheduler.scheduleAtFixedRate(new NotifyToServer(id, coinService), 0, 1, TimeUnit.MINUTES);
+        } while ((abs(currentPrice - coinService.getCoinPrice(id)) / currentPrice) * 100 <= 1);
 
 
     }

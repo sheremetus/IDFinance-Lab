@@ -9,7 +9,7 @@ public interface CoinService {
 
     public Coin getCoin(int id);
 
-    public void notifyUser(String username, int id, double actualPrice);
-
     public void updateCoinPrice(double price,int id);
+
+    public double getCoinPrice(int id);
 }

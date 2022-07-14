@@ -12,7 +12,5 @@ public interface CoinDAO {
 
     public void updateCoinPrice(double price, int id);
 
-    public void notifyUser(String username, int id, double actualPrice);
-
-
+    public double getCoinPrice(int id);
 }

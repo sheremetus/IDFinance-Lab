@@ -29,7 +29,7 @@ import java.nio.charset.Charset;
 import java.util.List;
 
 @Repository
-public class CoinDAOImpl implements CoinDAO  {
+public class CoinDAOImpl implements CoinDAO {
     @Autowired
     private SessionFactory sessionFactory;
 
@@ -51,24 +51,21 @@ public class CoinDAOImpl implements CoinDAO  {
     }
 
     @Override
-    public  void updateCoinPrice(double price, int id) {
+    public void updateCoinPrice(double price, int id) {
         Session session = sessionFactory.getCurrentSession();
 
-        Coin coin= (Coin) session.load(Coin.class, id);
+        Coin coin =  session.load(Coin.class, id);
         coin.setPrice(price);
         session.update(coin);
-
 
     }
 
     @Override
-    public void notifyUser(String username, int id, double actualPrice) {
+    public double getCoinPrice(int id) {
         Session session = sessionFactory.getCurrentSession();
-        session.save(new UserNotify(username, id, actualPrice));
-
+        Coin coin=session.get(Coin.class, id);
+        return coin.getPrice();
     }
-
-
 
 
 }

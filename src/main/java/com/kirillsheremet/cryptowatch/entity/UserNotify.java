@@ -5,6 +5,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "user_notify")
 public class UserNotify {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

@@ -63,7 +63,7 @@ public class CryptoController {
 
         ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
 
-        scheduler.scheduleAtFixedRate(new NotifyToServer(id, coinService, currentPrice, username, scheduler), 0, 10, TimeUnit.SECONDS);
+        scheduler.scheduleAtFixedRate(new NotifyToServer(id, coinService, currentPrice, username, scheduler), 0, 1, TimeUnit.MINUTES);
     }
 
 

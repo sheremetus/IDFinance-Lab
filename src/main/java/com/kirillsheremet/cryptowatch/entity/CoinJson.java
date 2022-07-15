@@ -9,7 +9,6 @@ import javax.persistence.Id;
 import java.io.Serializable;
 
 @Entity
-
 public class CoinJson implements Serializable  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

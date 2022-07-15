@@ -1,18 +1,9 @@
 package com.kirillsheremet.cryptowatch.timerTask;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kirillsheremet.cryptowatch.controller.CryptoController;
-import com.kirillsheremet.cryptowatch.dao.CoinDAO;
 import com.kirillsheremet.cryptowatch.entity.CoinJson;
 import com.kirillsheremet.cryptowatch.service.CoinService;
-import com.kirillsheremet.cryptowatch.service.CoinServiceImpl;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.client.RestTemplate;
-
-import javax.persistence.Query;
 import java.util.Arrays;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.logging.Level;
